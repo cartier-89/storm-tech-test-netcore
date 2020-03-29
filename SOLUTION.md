@@ -27,3 +27,18 @@ Commit is self-explanatory.
 
 I could not complete this task within reasonable time. I added filtering depending on the view model but I did not
 manage to bind the checkbox with ViewModel property.
+
+6. _Currently /TodoList shows all todo-lists that the user is owner of. Change this so it also shows todo-lists that 
+the user has at least one item where they are marked as the responsible party_
+
+This could have been solved with single Linq Query but I am worried about performance. In order to optimize a bit
+I first create distinct collection of `TodoList` which contain at least 1 item that the user is responsible for
+and then select all lists that belong to the list.
+
+Single Linq query could be:
+```csharp
+    return dbContext.TodoLists
+                .Include(tl => tl.Owner)
+                .Include(tl => tl.Items)
+                .Where(tl => tl.Owner.Id == userId && tl.Items.Any(i => i.ResponsiblePartyId == userId));
+```
