@@ -17,3 +17,8 @@ whatsoever.
 
 I ordered `Model.Items` by `Importance`. There is no need to write `IComparer` since `Importance` is a simple enum and
 it is already ordered. In more advanced cases writing own `IComparer` might be required.
+
+3. _Run the unit tests. One test should be failing. The process that maps a TodoItem to a TodoItemEditFields 
+instance is failing - the Importance field is not copied. Fix the bug and ensure the test passes._
+
+Commit is self-explanatory.
