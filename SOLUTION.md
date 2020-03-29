@@ -42,3 +42,14 @@ Single Linq query could be:
                 .Include(tl => tl.Items)
                 .Where(tl => tl.Owner.Id == userId && tl.Items.Any(i => i.ResponsiblePartyId == userId));
 ```
+
+7. _Add a Rank property to the TodoItem class. Add an EntityFramework migration to reflect this change. 
+Allow a user to set the rank property on the edit page. Add a new option on the details page to order by rank._
+
+Remarks: `Edit.cshtml` code was copied from `Create.cshtml`.
+
+I added ordering of the list via property `TodoItemOrder Order`. Since I do not know how to link it with the `cshtml`
+page I hard coded the order to `Importance`. It can be changed in the constructor of the `ToDoListDetailViewmodel` to
+see how it works in action.
+
+I also hard-coded `HideDone` to false. When it is changed to `true` all done tasks will be automatically filtered out.
