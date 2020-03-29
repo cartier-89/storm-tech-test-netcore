@@ -4,16 +4,24 @@ using HtmlAgilityPack;
 
 namespace Todo.Gravatar
 {
+    /// <summary>
+    /// Gravatar client which uses Http protocol.
+    /// </summary>
     public class HttpGravatarClient : IGravatarClient
     {
         private HttpClient _httpClient;
 
+        /// <summary>
+        /// Constructs HttpGravatarClient object.
+        /// </summary>
+        /// <param name="client">HttpClient to inject.</param>
         public HttpGravatarClient(HttpClient client)
         {
             _httpClient = client;
         }
 
-        public async Task<string> GetName(string email)
+        /// <inheritdoc/>
+        public async Task<string> GetNameAsync(string email)
         {
             string hashEmail = GravatarHasher.GetHash(email);
             HttpResponseMessage response = await _httpClient.GetAsync(hashEmail);

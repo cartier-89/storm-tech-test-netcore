@@ -8,9 +8,9 @@ namespace Todo.Gravatar
     public interface IGravatarClient
     {
         /// <summary>
-        /// Gets the name of the user.
+        /// Asynchronously gets the Gravatar user name of the given e-mail/
         /// </summary>
         /// <param name="email">Email identifier.</param>
-        Task<string> GetName(string email);
+        Task<string> GetNameAsync(string email);
     }
 }

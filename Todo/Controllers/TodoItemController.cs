@@ -5,6 +5,7 @@ using Todo.Data;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
+using Todo.Repositories;
 using Todo.Services;
 
 namespace Todo.Controllers
@@ -13,10 +14,12 @@ namespace Todo.Controllers
     public class TodoItemController : Controller
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ITodoItemRepository _todoItemRepository;
 
-        public TodoItemController(ApplicationDbContext dbContext)
+        public TodoItemController(ApplicationDbContext dbContext, ITodoItemRepository todoItemRepository)
         {
             this.dbContext = dbContext;
+            _todoItemRepository = todoItemRepository;
         }
 
         [HttpGet]
@@ -33,12 +36,20 @@ namespace Todo.Controllers
         {
             if (!ModelState.IsValid) { return View(fields); }
 
-            var item = new TodoItem(fields.TodoListId, fields.ResponsiblePartyId, fields.Title, fields.Importance);
-
-            await dbContext.AddAsync(item);
-            await dbContext.SaveChangesAsync();
+            await _todoItemRepository.CreateAsync(fields);
 
             return RedirectToListDetail(fields.TodoListId);
+        }
+
+        [HttpPost("unused")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateItem(TodoItemCreateFields fields)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }
+
+            int id = await _todoItemRepository.CreateAsync(fields);
+
+            return Ok(id);
         }
 
         [HttpGet]

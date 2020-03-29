@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Todo.Data;
 using Todo.Gravatar;
+using Todo.Repositories;
 
 namespace Todo
 {
@@ -43,6 +44,9 @@ namespace Todo
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
+        /// <summary>
+        /// Configures all services and classes related to Gravatar service.
+        /// </summary>
         public void ConfigureGravatarClient(IServiceCollection services)
         {
             services.AddTransient<IGravatarClient, HttpGravatarClient>();
@@ -56,6 +60,14 @@ namespace Todo
                 TimeSpan.FromSeconds(30),
                 TimeSpan.FromSeconds(60),
             }));
+        }
+
+        /// <summary>
+        /// Configures all repositories.
+        /// </summary>
+        public void ConfigureRepositories(IServiceCollection services)
+        {
+            services.AddScoped<ITodoItemRepository, TodoItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
