@@ -22,3 +22,8 @@ it is already ordered. In more advanced cases writing own `IComparer` might be r
 instance is failing - the Importance field is not copied. Fix the bug and ensure the test passes._
 
 Commit is self-explanatory.
+
+5. _On the details page, add an option to hide items that are marked as done._
+
+I could not complete this task within reasonable time. I added filtering depending on the view model but I did not
+manage to bind the checkbox with ViewModel property.

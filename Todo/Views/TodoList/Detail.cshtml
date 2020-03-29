@@ -1,4 +1,4 @@
-﻿@using Todo.Data.Entities
+@using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
 
@@ -18,7 +18,9 @@
             </a>
         </li>
 
-        @foreach (var item in Model.Items.OrderBy(i => i.Importance))
+        @foreach (var item in Model.Items
+            .Where(i => !i.IsDone || !Model.HideDone)
+            .OrderBy(i => i.Importance))
         {
             string contextualClass;
             switch (item.Importance)
@@ -43,7 +45,7 @@
 
                         @if (item.IsDone)
                         {
-                            <s>@item.Title</s>
+                                <del>@item.Title</del>
                         }
                         else
                         {
@@ -64,5 +66,11 @@
 
             </li>
         }
+
+        <div>
+            <text>Hide done: </text>
+            @Html.CheckBoxFor(todo => todo.HideDone)
+        </div>
+
     </ul>
 </div>
