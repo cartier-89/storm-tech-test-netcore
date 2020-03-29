@@ -1,5 +1,4 @@
-﻿@using Todo.Controllers
-@using Todo.Data.Entities
+﻿@using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
 
@@ -19,7 +18,7 @@
             </a>
         </li>
 
-        @foreach (var item in Model.Items)
+        @foreach (var item in Model.Items.OrderBy(i => i.Importance))
         {
             string contextualClass;
             switch (item.Importance)
@@ -36,7 +35,7 @@
             }
 
             <li class="list-group-item @contextualClass">
-                
+
                 <div class="row">
 
                 <div class="col-md-8">

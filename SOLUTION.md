@@ -1,6 +1,19 @@
-1. Migrations have not been applied to the Db. Apply it.
+1. _Build and run the app. Register a user account, make some lists, 
+add some items – have a play and get familiar with the app._
+
+Migrations have not been applied to the Db. Apply it.
+
 Did auto-migrations apply on startup. Usually this is good approach only in development when you
 want to be sure that everything is up to date all the time. On real production defer this reponsibility
 to DBA, migration tool or some other entity.
 
 Considerations: Use FluentMigrator?
+
+2. _When todo items are displayed in browser in the details page, they are listed in an arbitrary order. 
+Change Views/TodoList/Detail.cshtml so that items are listed by order of importance: High, Medium, Low_
+
+Remark: I have no experience in writing _cshtml_, _javascript_, _html_, _css_ and any other front-end languages
+whatsoever.
+
+I ordered `Model.Items` by `Importance`. There is no need to write `IComparer` since `Importance` is a simple enum and
+it is already ordered. In more advanced cases writing own `IComparer` might be required.
