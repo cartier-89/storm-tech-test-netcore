@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Todo.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Todo.Data;
+using Todo.Gravatar;
 
 namespace Todo
 {
@@ -40,7 +38,24 @@ namespace Todo
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            ConfigureGravatarClient(services);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        }
+
+        public void ConfigureGravatarClient(IServiceCollection services)
+        {
+            services.AddTransient<IGravatarClient, HttpGravatarClient>();
+
+            services.AddHttpClient<IGravatarClient, HttpGravatarClient>(client =>
+            {
+                client.BaseAddress = new Uri("https://www.gravatar.com");
+            }).AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+            {
+                TimeSpan.FromSeconds(5),
+                TimeSpan.FromSeconds(30),
+                TimeSpan.FromSeconds(60),
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

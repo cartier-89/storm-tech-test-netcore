@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Todo.Services
+namespace Todo.Gravatar
 {
-    public static class Gravatar
+    public static class GravatarHasher
     {
         public static string GetHash(string emailAddress)
         {
