@@ -65,3 +65,5 @@ asynchronous fashion. I only implemented `HttpGravatarClient` but it could be ea
 - I had not made any `HtmlDocument` parsing before. I found online nuget package `HtmlAgilityPack`. I feel that
 getting the value of the class using `XPath` is ugly but I had no experience in doing this. I was using extensively
 [this blog post](https://dotnetcoretutorials.com/2018/02/27/loading-parsing-web-page-net-core/).
+- I used Polly to wait and retry HttpCalls if they fail. Adding fallback values and fallback behavior should be pretty
+simple using Polly policies.
