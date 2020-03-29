@@ -14,7 +14,7 @@ namespace Todo.Tests
 
         public WhenTodoItemIsConvertedToEditFields()
         {
-            var todoList = new TestTodoListBuilder(new IdentityUser("alice@example.com"), "shopping")
+            TodoList todoList = new TestTodoListBuilder(new IdentityUser("alice@example.com"), "shopping")
                     .WithItem("bread", Importance.High)
                     .Build()
                 ;
