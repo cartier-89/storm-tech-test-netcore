@@ -67,3 +67,10 @@ getting the value of the class using `XPath` is ugly but I had no experience in 
 [this blog post](https://dotnetcoretutorials.com/2018/02/27/loading-parsing-web-page-net-core/).
 - I used Polly to wait and retry HttpCalls if they fail. Adding fallback values and fallback behavior should be pretty
 simple using Polly policies.
+
+9. _The process of adding items to a list is pretty clunky; the user has to go to a new page, fill in a form, then go back to the list detail page. It would be easier for the user to do all that on the list detail page. Replace the "Add New Item" link with UI that allows creation of items without navigating away from the detail page. You will need to use Javascript and an API that you create._
+
+Remarks:
+- I do not know Javascript and thus I completely skipped the javascript side of the task.
+- Taking into consideration the above, in order for the application to keep working I had to keep the code as it is.
+- I added repository layer to take off the load from the controller. 

@@ -40,6 +40,7 @@ namespace Todo
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             ConfigureGravatarClient(services);
+            ConfigureRepositories(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

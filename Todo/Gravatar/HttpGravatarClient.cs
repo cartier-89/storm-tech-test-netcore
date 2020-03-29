@@ -28,7 +28,7 @@ namespace Todo.Gravatar
             HttpResponseMessage userData = await _httpClient.GetAsync(response.RequestMessage.RequestUri);
             string pageContent = await userData.Content.ReadAsStringAsync();
             string userName = ExtractUserName(pageContent);
-            return userName;
+            return userName ?? string.Empty;
         }
 
         private string ExtractUserName(string pageContent)
@@ -36,7 +36,7 @@ namespace Todo.Gravatar
             var pageDocument = new HtmlDocument();
             pageDocument.LoadHtml(pageContent);
             HtmlNode value = pageDocument.DocumentNode.SelectSingleNode("(//h2[contains(@class,'fn')])[1]");
-            return value.InnerText;
+            return value?.InnerText;
         }
     }
 }
