@@ -74,3 +74,12 @@ Remarks:
 - I do not know Javascript and thus I completely skipped the javascript side of the task.
 - Taking into consideration the above, in order for the application to keep working I had to keep the code as it is.
 - I added repository layer to take off the load from the controller. 
+
+10. _Add an API that allows setting of the Rank property (added in Task 8). Add Javascript functionality that allows reordering of list items by rank without navigating away from the detail page_
+
+Remarks:
+- I do not know Javascript so could not complete part of the task related to it
+- Added new methods to repository interface
+- Opted to go with HttpPatch as it seems to be the best fit
+- Added custom exception when TodoItem is not found
+- controller decides what to do with the exceptions

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Todo.Data;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
+using Todo.Exceptions;
 using Todo.Models.TodoItems;
 using Todo.Repositories;
 using Todo.Services;
@@ -74,6 +75,20 @@ namespace Todo.Controllers
             await dbContext.SaveChangesAsync();
 
             return RedirectToListDetail(todoItem.TodoListId);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> ModifyRank([FromRoute] int id, int rank)
+        {
+            try
+            {
+                await _todoItemRepository.ModifyRankAsync(id, rank);
+                return NoContent();
+            }
+            catch (TodoItemNotFoundException e)
+            {
+                return NotFound();
+            }
         }
 
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
