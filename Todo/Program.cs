@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Todo.Data;
 
 namespace Todo
 {
@@ -14,11 +11,27 @@ namespace Todo
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            IWebHost webHostBuilder = CreateWebHostBuilder(args).Build();
+
+            MigrateDb(webHostBuilder);
+
+            webHostBuilder.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
+        private static void MigrateDb(IWebHost webHostBuilder)
+        {
+            using (IServiceScope scope = webHostBuilder.Services.CreateScope())
+            {
+                IServiceProvider services = scope.ServiceProvider;
+                using (var context = services.GetRequiredService<ApplicationDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
+        }
     }
 }
